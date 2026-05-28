@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" type="image/png" href="texture.jpg">
-<title>DVD Крысюк</title>
+<link type="image/png" href="texture.jpg" rel="icon">
+<title>DVD Rat</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -14,22 +14,27 @@
     height: 100vh;
     overflow: hidden;
     position: relative;
+    /* Разрешаем корректные тапы на мобилках без задержек */
+    touch-action: manipulation;
   }
 
-  #dvd {
+  .rat-container {
     position: absolute;
-    width: 200px;
-    height: 160px;
+    width: 220px;
+    height: 180px;
     will-change: transform;
   }
 
-  #dvd img {
+  .rat-container img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
   }
 
+  /* Ватермарк на английском */
   #watermark {
     position: fixed;
     bottom: 14px;
@@ -40,48 +45,136 @@
     user-select: none;
     pointer-events: none;
     font-family: 'Courier New', monospace;
+    z-index: 9999;
+  }
+
+  /* Инструкция на английском */
+  #info {
+    position: fixed;
+    top: 15px;
+    left: 20px;
+    color: #757575;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    pointer-events: none; /* Клики проходят сквозь текст */
+    z-index: 9999;
+    line-height: 1.5;
+    user-select: none;
   }
 </style>
 </head>
 <body>
 
-<div id="dvd">
-  <img src="texture.jpg" alt="rat" draggable="false" />
+<div id="info">
+  Scroll: Speed (current: <span id="speed-val">1.0</span>x)<br>
+  Tap / Space: Spawn another rat
 </div>
+
 <div id="watermark">by nepetapip3</div>
 
 <script>
-  const dvd = document.getElementById('dvd');
-
   const SIZE_W = 220;
   const SIZE_H = 180;
+  let globalSpeed = 1.0;
+  const rats = [];
 
-  let x = Math.random() * (window.innerWidth - SIZE_W);
-  let y = Math.random() * (window.innerHeight - SIZE_H);
-  let speed = 1.0;
-  let vx = 2.5;
-  let vy = 2.0;
+  class Ratsky {
+    constructor(clickX, clickY) {
+      this.el = document.createElement('div');
+      this.el.className = 'rat-container';
+      
+      this.img = document.createElement('img');
+      this.img.src = 'texture.jpg';
+      this.img.draggable = false;
+      this.el.appendChild(this.img);
+      document.body.appendChild(this.el);
 
+      this.w = SIZE_W;
+      this.h = SIZE_H;
+      
+      // Если переданы координаты клика — спавним прямо под пальцем/курсором
+      if (clickX !== undefined && clickY !== undefined) {
+        // Центрируем крысу относительно точки тапа
+        this.x = clickX - this.w / 2;
+        this.y = clickY - this.h / 2;
+        
+        // Ограничиваем, чтобы не вылезла за границы экрана при спавне
+        this.x = Math.max(0, Math.min(this.x, window.innerWidth - this.w));
+        this.y = Math.max(0, Math.min(this.y, window.innerHeight - this.h));
+      } else {
+        // Иначе спавним в рандомном месте (для самого первого)
+        this.x = Math.random() * (window.innerWidth - this.w);
+        this.y = Math.random() * (window.innerHeight - this.h);
+      }
+      
+      this.vx = (Math.random() > 0.5 ? 2.5 : -2.5) * (Math.random() * 0.5 + 0.8);
+      this.vy = (Math.random() > 0.5 ? 2.0 : -2.0) * (Math.random() * 0.5 + 0.8);
+
+      this.applyStyle();
+    }
+
+    update() {
+      this.x += this.vx * globalSpeed;
+      this.y += this.vy * globalSpeed;
+
+      if (this.x <= 0) { 
+        this.x = 0; 
+        this.vx = Math.abs(this.vx); 
+      } else if (this.x + this.w >= window.innerWidth) { 
+        this.x = window.innerWidth - this.w; 
+        this.vx = -Math.abs(this.vx); 
+      }
+
+      if (this.y <= 0) { 
+        this.y = 0; 
+        this.vy = Math.abs(this.vy); 
+      } else if (this.y + this.h >= window.innerHeight) { 
+        this.y = window.innerHeight - this.h; 
+        this.vy = -Math.abs(this.vy); 
+      }
+
+      this.applyStyle();
+    }
+
+    applyStyle() {
+      this.el.style.transform = `translate(${this.x}px, ${this.y}px)`;
+    }
+  }
+
+  // Функция для безопасного добавления крысы
+  function spawnRat(x, y) {
+    if (rats.length < 60) {
+      rats.push(new Ratsky(x, y));
+    }
+  }
+
+  // Создаем первую стартовую крысу
+  rats.push(new Ratsky());
+
+  // Спавн по клику мыши или тапу экрана (как на мобилках, так и на ПК)
+  window.addEventListener('click', (e) => {
+    spawnRat(e.clientX, e.clientY);
+  });
+
+  // Изменение скорости скроллом
   window.addEventListener('wheel', (e) => {
-    speed += e.deltaY > 0 ? 0.15 : -0.15;
-    speed = Math.max(0.1, Math.min(speed, 10));
+    globalSpeed += e.deltaY > 0 ? 0.15 : -0.15;
+    globalSpeed = Math.max(0.1, Math.min(globalSpeed, 10));
+    document.getElementById('speed-val').textContent = globalSpeed.toFixed(1);
+  });
+
+  // Спавн по пробелу для ПК-бояр
+  window.addEventListener('keydown', (e) => {
+    if (e.code === 'Space') {
+      e.preventDefault();
+      spawnRat();
+    }
   });
 
   function animate() {
-    x += vx * speed;
-    y += vy * speed;
-
-    if (x <= 0) { x = 0; vx = Math.abs(vx); }
-    else if (x + SIZE_W >= window.innerWidth) { x = window.innerWidth - SIZE_W; vx = -Math.abs(vx); }
-
-    if (y <= 0) { y = 0; vy = Math.abs(vy); }
-    else if (y + SIZE_H >= window.innerHeight) { y = window.innerHeight - SIZE_H; vy = -Math.abs(vy); }
-
-    dvd.style.transform = `translate(${x}px, ${y}px)`;
+    rats.forEach(rat => rat.update());
     requestAnimationFrame(animate);
   }
-
-  dvd.style.transform = `translate(${x}px, ${y}px)`;
   requestAnimationFrame(animate);
 </script>
 </body>
