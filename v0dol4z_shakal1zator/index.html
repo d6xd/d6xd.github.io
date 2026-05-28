@@ -1,114 +1,173 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="icon" type="image/png" href="ico.jpg">
   <title>shakalizer — nepetapip3</title>
-  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;700&family=Google+Sans+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <!-- Подключаем оригинальный шрифт Google Sans и Mono -->
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Mono:wght@400;500&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
   <style>
     :root {
-      --bg:        #121212;
-      --surface:   #1e1e1e;
-      --surface2:  #2c2c2c;
-      --primary:   #ffffff;
-      --primary-v: #3700b3;
-      --on-primary:#000000;
-      --on-bg:     #e1e1e1;
-      --on-surface:#cfcfcf;
-      --divider:   rgba(255,255,255,.12);
-      --ripple:    rgba(187,134,252,.2);
-      --elev1:     0 2px 4px rgba(0,0,0,.6);
-      --elev2:     0 4px 8px rgba(0,0,0,.7);
-      --elev3:     0 8px 24px rgba(0,0,0,.8);
-      --accent:    #ce9ffc;
+      /* Палитра Material Design 3 (Тёмная схема) */
+      --md-sys-color-background: #141218;
+      --md-sys-color-on-background: #e6e1e5;
+      --md-sys-color-surface: #211f26;
+      --md-sys-color-surface-variant: #49454f;
+      --md-sys-color-on-surface: #e6e1e5;
+      --md-sys-color-on-surface-variant: #cac4d0;
+      --md-sys-color-primary: #d0bcff;
+      --md-sys-color-on-primary: #381e72;
+      --md-sys-color-outline: #938f99;
+      --md-ripple-color: rgba(56, 30, 114, 0.25);
+      
+      /* Тени MD3 */
+      --md-elevation-1: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+      --md-elevation-2: 0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Светлая схема Material Design 3 */
+    html[data-theme="light"] {
+      --md-sys-color-background: #fef7ff;
+      --md-sys-color-on-background: #1d1b20;
+      --md-sys-color-surface: #f3edf7;
+      --md-sys-color-surface-variant: #e7e0ec;
+      --md-sys-color-on-surface: #1d1b20;
+      --md-sys-color-on-surface-variant: #49454f;
+      --md-sys-color-primary: #6750a4;
+      --md-sys-color-on-primary: #ffffff;
+      --md-sys-color-outline: #79747e;
+      --md-ripple-color: rgba(255, 255, 255, 0.35);
+
+      --md-elevation-1: 0px 1px 3px 1px rgba(0, 0, 0, 0.08), 0px 1px 2px 0px rgba(0, 0, 0, 0.15);
+      --md-elevation-2: 0px 2px 6px 2px rgba(0, 0, 0, 0.08), 0px 1px 2px 0px rgba(0, 0, 0, 0.15);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background: var(--bg);
-      color: var(--on-bg);
+      background: var(--md-sys-color-background);
+      color: var(--md-sys-color-on-background);
       font-family: 'Google Sans', sans-serif;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 24px;
-      padding-top: 80px;
+      padding: 88px 24px 48px;
+      transition: background .3s ease, color .3s ease;
     }
 
+    /* Панель Top App Bar */
     .app-bar {
       position: fixed;
       top: 0; left: 0; right: 0;
-      height: 56px;
-      background: var(--surface);
-      box-shadow: var(--elev1);
+      height: 64px;
+      background: var(--md-sys-color-surface);
       display: flex;
       align-items: center;
+      justify-content: space-between;
       padding: 0 20px;
       z-index: 10;
-      gap: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      transition: background .3s ease;
     }
-    .app-bar-title {
-      font-family: 'Google Sans Mono', monospace;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--primary);
-      letter-spacing: .05em;
+    html[data-theme="light"] .app-bar {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.04);
     }
 
+    .app-bar-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .app-bar-title {
+      font-family: 'Google Sans Mono', monospace;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--md-sys-color-on-surface);
+      letter-spacing: .02em;
+    }
+
+    /* Переключатель темы */
+    .icon-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: 1px solid var(--md-sys-color-outline);
+      border-radius: 100px;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      color: var(--md-sys-color-primary);
+      transition: background .2s, border-color .2s;
+    }
+    .icon-btn:hover {
+      background: rgba(103, 80, 164, 0.08);
+    }
+    html[data-theme="dark"] .icon-btn:hover {
+      background: rgba(208, 188, 255, 0.08);
+    }
+
+    /* Главная карточка */
     .card {
-      background: var(--surface);
-      border-radius: 16px;
-      box-shadow: var(--elev3);
-      padding: 54px 46px 46px;
-      max-width: 620px;
+      background: var(--md-sys-color-surface);
+      border-radius: 28px;
+      box-shadow: var(--md-elevation-1);
+      padding: 48px 40px;
+      max-width: 640px;
       width: 100%;
       text-align: center;
-      animation: fadeUp .5s ease both;
+      animation: fadeUp .4s cubic-bezier(0.2, 0, 0, 1) both;
+      transition: background .3s ease, box-shadow .3s ease;
     }
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
+      from { opacity: 0; transform: translateY(16px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
     .headline {
-      font-size: 24px;
-      font-weight: 700;
+      font-size: 26px;
+      font-weight: 500;
       line-height: 1.35;
-      color: var(--on-bg);
+      color: var(--md-sys-color-on-surface);
       margin-bottom: 12px;
     }
     .subheadline {
-      font-size: 16px;
-      font-weight: 300;
-      color: var(--on-surface);
-      line-height: 1.6;
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--md-sys-color-on-surface-variant);
+      line-height: 1.5;
       margin-bottom: 32px;
     }
 
     .divider {
       height: 1px;
-      background: var(--divider);
-      margin: 0 -46px 32px;
+      background: var(--md-sys-color-surface-variant);
+      margin: 0 -40px 32px;
+      opacity: 0.3;
     }
 
-    /* UPLOAD ZONE */
+    /* UPLOAD ZONE (Зона загрузки MD3) */
     .upload-zone {
-      border: 2px dashed rgba(255,255,255,.2);
-      border-radius: 12px;
-      padding: 32px 20px;
+      border: 2px dashed var(--md-sys-color-outline);
+      border-radius: 16px;
+      padding: 36px 20px;
       cursor: pointer;
       transition: border-color .2s, background .2s;
       margin-bottom: 24px;
       position: relative;
+      background: rgba(0, 0, 0, 0.02);
     }
     .upload-zone:hover, .upload-zone.dragover {
-      border-color: var(--accent);
-      background: rgba(206,159,252,.05);
+      border-color: var(--md-sys-color-primary);
+      background: rgba(103, 80, 164, 0.04);
+    }
+    html[data-theme="dark"] .upload-zone:hover, html[data-theme="dark"] .upload-zone.dragover {
+      background: rgba(208, 188, 255, 0.04);
     }
     .upload-zone input[type=file] {
       position: absolute;
@@ -120,54 +179,58 @@
     }
     .upload-icon {
       font-size: 40px !important;
-      color: rgba(255,255,255,.3);
-      margin-bottom: 8px;
+      color: var(--md-sys-color-primary);
+      margin-bottom: 12px;
       display: block;
     }
     .upload-label {
       font-size: 14px;
-      color: var(--on-surface);
-      font-weight: 400;
+      color: var(--md-sys-color-on-surface-variant);
     }
     .upload-label span {
-      color: var(--accent);
+      color: var(--md-sys-color-primary);
       font-weight: 500;
     }
 
-    /* PREVIEW */
+    /* PREVIEW (Превью) */
     #preview-wrap {
       display: none;
-      margin-bottom: 24px;
+      margin-bottom: 28px;
       position: relative;
     }
     #preview-img {
       max-width: 100%;
-      max-height: 240px;
-      border-radius: 10px;
-      box-shadow: var(--elev2);
+      max-height: 260px;
+      border-radius: 16px;
+      box-shadow: var(--md-elevation-1);
       object-fit: contain;
     }
     .remove-btn {
       position: absolute;
       top: 8px; right: 8px;
-      background: rgba(0,0,0,.6);
+      background: var(--md-sys-color-surface-variant);
       border: none;
       border-radius: 50%;
-      width: 32px; height: 32px;
+      width: 36px; height: 36px;
       cursor: pointer;
       display: flex; align-items: center; justify-content: center;
-      color: #fff;
-      transition: background .2s;
+      color: var(--md-sys-color-on-surface);
+      box-shadow: var(--md-elevation-1);
+      transition: background .2s, transform .2s;
     }
-    .remove-btn:hover { background: rgba(200,0,0,.7); }
+    .remove-btn:hover { 
+      background: #ffb4ab;
+      color: #690005;
+    }
+    .remove-btn:active { transform: scale(0.9); }
 
-    /* LEVEL SECTION */
+    /* SELECTION LEVELS (Уровни) */
     .level-label {
       font-size: 13px;
       font-weight: 500;
-      letter-spacing: .08em;
+      letter-spacing: .04em;
       text-transform: uppercase;
-      color: var(--on-surface);
+      color: var(--md-sys-color-on-surface-variant);
       margin-bottom: 14px;
       text-align: left;
     }
@@ -175,121 +238,145 @@
     .level-grid {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
-      gap: 8px;
-      margin-bottom: 28px;
+      gap: 10px;
+      margin-bottom: 32px;
     }
 
     .level-btn {
       position: relative;
       overflow: hidden;
-      background: var(--surface2);
-      border: 2px solid transparent;
-      border-radius: 8px;
-      padding: 10px 4px;
+      background: transparent;
+      border: 1px solid var(--md-sys-color-outline);
+      border-radius: 16px;
+      padding: 12px 4px;
       cursor: pointer;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 4px;
-      transition: border-color .2s, background .2s, box-shadow .2s;
+      gap: 6px;
+      transition: background .25s, color .25s, border-color .25s, box-shadow .25s;
       font-family: 'Google Sans', sans-serif;
+      color: var(--md-sys-color-on-surface-variant);
     }
     .level-btn .lvl-num {
       font-size: 16px;
-      font-weight: 700;
-      color: var(--on-bg);
+      font-weight: 500;
     }
     .level-btn .lvl-emoji {
-      font-size: 18px;
+      font-size: 20px;
       line-height: 1;
     }
     .level-btn:hover {
-      border-color: rgba(206,159,252,.4);
-      background: rgba(206,159,252,.08);
+      background: rgba(103, 80, 164, 0.08);
+      color: var(--md-sys-color-primary);
+    }
+    html[data-theme="dark"] .level-btn:hover {
+      background: rgba(208, 188, 255, 0.08);
     }
     .level-btn.selected {
-      border-color: var(--accent);
-      background: rgba(206,159,252,.12);
-      box-shadow: 0 0 0 1px var(--accent);
+      border-color: transparent;
+      background: var(--md-sys-color-primary);
+      color: var(--md-sys-color-on-primary) !important;
+      box-shadow: var(--md-elevation-2);
     }
-    .level-btn.selected .lvl-num { color: var(--accent); }
 
-    /* ACTION BTN */
+    /* BUTTONS */
     .md-btn {
       position: relative;
       overflow: hidden;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      background: var(--primary);
-      color: var(--on-primary);
+      gap: 10px;
+      background: transparent;
+      color: var(--md-sys-color-primary);
       font-family: 'Google Sans', sans-serif;
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 500;
-      letter-spacing: .08em;
-      text-transform: uppercase;
+      letter-spacing: .01em;
       text-decoration: none;
-      border: none;
-      border-radius: 4px;
-      padding: 0 24px;
+      border: 1px solid var(--md-sys-color-outline);
+      border-radius: 100px;
+      padding: 0 28px;
       height: 48px;
       cursor: pointer;
-      box-shadow: var(--elev1);
-      transition: box-shadow .2s, background .2s;
-      min-width: 180px;
+      transition: background .25s, color .25s, border-color .25s, box-shadow .25s;
+      min-width: 200px;
       justify-content: center;
     }
     .md-btn:hover:not(:disabled) {
-      background: var(--accent);
-      box-shadow: var(--elev2);
+      background: var(--md-sys-color-primary);
+      color: var(--md-sys-color-on-primary);
+      border-color: transparent;
+      box-shadow: var(--md-elevation-2);
     }
-    .md-btn:active:not(:disabled) { box-shadow: none; }
     .md-btn:disabled {
-      opacity: .4;
+      opacity: .3;
       cursor: not-allowed;
+      border-color: var(--md-sys-color-outline);
+      color: var(--md-sys-color-on-surface-variant);
     }
 
+    /* Ripple эффект */
     .ripple-circle {
       position: absolute;
       border-radius: 50%;
-      background: rgba(0,0,0,.25);
+      background: var(--md-ripple-color);
       transform: scale(0);
-      animation: ripple .5s linear;
+      animation: ripple .4s cubic-bezier(0.1, 0.8, 0.3, 1);
       pointer-events: none;
     }
     @keyframes ripple {
       to { transform: scale(4); opacity: 0; }
     }
 
-    /* STATUS */
+    /* STATUS (Индикатор) */
     #status {
-      margin-top: 16px;
+      margin-top: 20px;
       font-size: 14px;
-      color: var(--on-surface);
+      color: var(--md-sys-color-primary);
       min-height: 20px;
       font-family: 'Google Sans Mono', monospace;
+      font-weight: 500;
     }
 
-    /* RESULT */
+    /* PROGRESS BAR (Индикатор прогресса) */
+    .progress-bar-wrap {
+      display: none;
+      width: 100%;
+      height: 4px;
+      background: var(--md-sys-color-surface-variant);
+      border-radius: 100px;
+      margin-top: 16px;
+      overflow: hidden;
+    }
+    .progress-bar-inner {
+      height: 100%;
+      width: 0%;
+      background: var(--md-sys-color-primary);
+      border-radius: 100px;
+      transition: width .2s ease;
+    }
+
+    /* RESULT AREA */
     #result-wrap {
       display: none;
-      margin-top: 24px;
-      padding-top: 24px;
-      border-top: 1px solid var(--divider);
+      margin-top: 28px;
+      padding-top: 28px;
+      border-top: 1px solid var(--md-sys-color-surface-variant);
     }
     #result-label {
       font-size: 13px;
       font-weight: 500;
-      letter-spacing: .08em;
+      letter-spacing: .04em;
       text-transform: uppercase;
-      color: var(--on-surface);
-      margin-bottom: 12px;
+      color: var(--md-sys-color-on-surface-variant);
+      margin-bottom: 16px;
     }
     #result-img {
       max-width: 100%;
-      max-height: 280px;
-      border-radius: 10px;
-      box-shadow: var(--elev2);
+      max-height: 320px;
+      border-radius: 16px;
+      box-shadow: var(--md-elevation-2);
       object-fit: contain;
       margin-bottom: 16px;
       display: block;
@@ -297,56 +384,60 @@
       margin-right: auto;
     }
     #result-caption {
-      font-size: 14px;
-      color: var(--on-surface);
-      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--md-sys-color-on-surface-variant);
+      margin-bottom: 20px;
       font-style: italic;
     }
 
-    /* PROGRESS BAR */
-    .progress-bar-wrap {
-      display: none;
-      width: 100%;
-      height: 4px;
-      background: var(--surface2);
-      border-radius: 2px;
-      margin-top: 12px;
-      overflow: hidden;
-    }
-    .progress-bar-inner {
-      height: 100%;
-      width: 0%;
-      background: var(--accent);
-      border-radius: 2px;
-      transition: width .3s ease;
-    }
-
+    /* Футер */
     footer {
-      margin-top: 40px;
-      font-size: 12px;
-      color: rgba(255,255,255,.3);
+      margin-top: 48px;
+      font-size: 13px;
+      color: var(--md-sys-color-on-surface-variant);
+      opacity: 0.6;
       letter-spacing: .04em;
+      cursor: pointer;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: opacity .2s ease, background .2s ease, transform .1s ease;
+      user-select: none;
+    }
+    footer:hover {
+      opacity: 0.9;
+      background: rgba(103, 80, 164, 0.05);
+    }
+    html[data-theme="dark"] footer:hover {
+      background: rgba(208, 188, 255, 0.05);
+    }
+    footer:active { transform: scale(0.97); }
+    .footer-fade {
+      opacity: 0;
+      transform: translateY(-4px);
     }
 
-    @media (max-width: 480px) {
-      body { padding: 16px; padding-top: 72px; }
-      .card { padding: 32px 24px 28px; }
+    /* Адаптивность для мобилок */
+    @media (max-width: 600px) {
+      body { padding: 80px 16px 32px; }
+      .card { padding: 36px 24px; border-radius: 24px; }
       .divider { margin: 0 -24px 24px; }
-      .headline { font-size: 18px; }
+      .headline { font-size: 22px; }
       .subheadline { font-size: 14px; margin-bottom: 24px; }
-      .level-grid { grid-template-columns: repeat(6, 1fr); gap: 6px; }
-      .level-btn { padding: 8px 2px; }
-      .level-btn .lvl-num { font-size: 14px; }
-      .level-btn .lvl-emoji { font-size: 15px; }
-      .md-btn { width: 100%; }
+      .level-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; } /* 3 в ряд на мобилках для удобства */
+      .md-btn { width: 100%; height: 52px; }
     }
   </style>
 </head>
 <body>
 
   <div class="app-bar">
-    <span class="material-icons" style="font-size:18px">image_search</span>
-    <span class="app-bar-title">shakalizer — nepetapip3.github.io</span>
+    <div class="app-bar-brand">
+      <span class="material-icons" style="color: var(--md-sys-color-on-surface)">image_search</span>
+      <span class="app-bar-title">shakalizer — nepetapip3.github.io</span>
+    </div>
+    <button class="icon-btn" onclick="toggleTheme()" id="theme-btn" title="Сменить тему">
+      <span class="material-icons">dark_mode</span>
+    </button>
   </div>
 
   <div class="card">
@@ -400,7 +491,7 @@
     </div>
   </div>
 
-  <footer id="footer-text">nepetapip3 · github.io</footer>
+  <footer id="footer-text" onclick="changeFooterText()" title="Кликни, чтобы изменить фразу">nepetapip3 · github.io</footer>
 
   <script>
     let selectedLevel = null;
@@ -416,10 +507,6 @@
     };
 
     const levelParams = {
-      1:  { quality: 0.85, scale: 1.00, passes: 1 },
-      2:  { quality: 0.70, scale: 0.95, passes: 1 },
-      3:  { quality: 0.55, scale: 0.85, passes: 2 },
-      4:  { quality: 0.40, scale: 0.75, passes: 2 },
       5:  { quality: 0.30, scale: 0.65, passes: 3 },
       6:  { quality: 0.20, scale: 0.55, passes: 3 },
       7:  { quality: 0.12, scale: 0.45, passes: 4 },
@@ -487,13 +574,12 @@
     });
 
     document.querySelectorAll('.level-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
+      btn.addEventListener('click', function(e) {
         document.querySelectorAll('.level-btn').forEach(b => b.classList.remove('selected'));
         this.classList.add('selected');
         selectedLevel = parseInt(this.dataset.level);
         updateBtn();
-        rippleEffect(this, { clientX: this.getBoundingClientRect().left + this.offsetWidth/2,
-                             clientY: this.getBoundingClientRect().top  + this.offsetHeight/2 });
+        rippleEffect(this, e);
       });
     });
 
@@ -510,9 +596,6 @@
       setProgress(0);
       resultWrap.style.display = 'none';
 
-      const totalSteps = passes;
-
-      // Load original image
       const bitmap = await createImageBitmap(imageFile);
       const origW = bitmap.width;
       const origH = bitmap.height;
@@ -554,7 +637,7 @@
         }
 
         setProgress(Math.round(((pass + 1) / passes) * 100));
-        await new Promise(r => setTimeout(r, 30)); // это пиздец
+        await new Promise(r => setTimeout(r, 30));
       }
 
       const finalBlob = await offscreen.convertToBlob({ type: 'image/jpeg', quality });
@@ -572,24 +655,26 @@
       resultWrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
+    // Ripple Эффект
     function rippleEffect(btn, e) {
       const circle = document.createElement('span');
       const rect   = btn.getBoundingClientRect();
       const size   = Math.max(rect.width, rect.height);
+      
       circle.className = 'ripple-circle';
-      circle.style.cssText = `
-        width:${size}px; height:${size}px;
-        left:${e.clientX - rect.left - size/2}px;
-        top:${e.clientY  - rect.top  - size/2}px;
-      `;
+      circle.style.width = circle.style.height = `${size}px`;
+      circle.style.left = `${e.clientX - rect.left - size/2}px`;
+      circle.style.top = `${e.clientY - rect.top - size/2}px`;
+      
       btn.appendChild(circle);
       circle.addEventListener('animationend', () => circle.remove());
     }
 
-    document.querySelectorAll('.md-btn').forEach(btn => {
+    document.querySelectorAll('.md-btn, .icon-btn').forEach(btn => {
       btn.addEventListener('click', function(e) { rippleEffect(this, e); });
     });
 
+    // Логика футера
     const footerVariants = [
       "nepetapip3.lol?",
       "nepetacsv? who is this?",
@@ -603,8 +688,41 @@
       "whoami",
       "jpeg artifacts are beautiful",
     ];
-    document.getElementById('footer-text').textContent =
-      footerVariants[Math.floor(Math.random() * footerVariants.length)];
+    
+    const footerEl = document.getElementById('footer-text');
+    footerEl.textContent = footerVariants[Math.floor(Math.random() * footerVariants.length)];
+
+    function changeFooterText() {
+      footerEl.style.transition = 'opacity 0.15s ease, transform 0.15s ease';
+      footerEl.classList.add('footer-fade');
+      
+      setTimeout(() => {
+        let currentText = footerEl.textContent;
+        let newText = currentText;
+        while (newText === currentText) {
+          newText = footerVariants[Math.floor(Math.random() * footerVariants.length)];
+        }
+        footerEl.textContent = newText;
+        footerEl.classList.remove('footer-fade');
+      }, 150);
+    }
+
+    // Логика тем
+    function toggleTheme() {
+      const html = document.documentElement;
+      const themeBtnIcon = document.querySelector('#theme-btn .material-icons');
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      html.setAttribute('data-theme', newTheme);
+      themeBtnIcon.textContent = newTheme === 'dark' ? 'dark_mode' : 'light_mode';
+      localStorage.setItem('theme', newTheme);
+    }
+
+    // Восстанавливаем сохраненную тему (чтобы работало синхронно с главной)
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    document.querySelector('#theme-btn .material-icons').textContent = savedTheme === 'dark' ? 'dark_mode' : 'light_mode';
   </script>
 </body>
 </html>

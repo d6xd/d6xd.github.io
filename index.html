@@ -1,189 +1,261 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="icon" type="image/png" href="ico.jpg">
   <title>nepetapip3</title>
-  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;700&family=Google+Sans+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <!-- Подключаем оригинальный шрифт Google Sans и Mono -->
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Mono:wght@400;500&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
   <style>
     :root {
-      --bg:        #121212;
-      --surface:   #1e1e1e;
-      --surface2:  #2c2c2c;
-      --primary:   #ffffff;
-      --primary-v: #3700b3;
-      --on-primary:#000000;
-      --on-bg:     #e1e1e1;
-      --on-surface:#cfcfcf;
-      --divider:   rgba(255,255,255,.12);
-      --ripple:    rgba(187,134,252,.2);
-      --elev1:     0 2px 4px rgba(0,0,0,.6);
-      --elev2:     0 4px 8px rgba(0,0,0,.7);
-      --elev3:     0 8px 24px rgba(0,0,0,.8);
+      /* Палитра Material Design 3 (Тёмная схема по умолчанию) */
+      --md-sys-color-background: #141218;
+      --md-sys-color-on-background: #e6e1e5;
+      --md-sys-color-surface: #211f26;
+      --md-sys-color-surface-variant: #49454f;
+      --md-sys-color-on-surface: #e6e1e5;
+      --md-sys-color-on-surface-variant: #cac4d0;
+      --md-sys-color-primary: #d0bcff;
+      --md-sys-color-on-primary: #381e72;
+      --md-sys-color-outline: #938f99;
+      --md-ripple-color: rgba(56, 30, 114, 0.25);
+      
+      /* Тени MD3 */
+      --md-elevation-1: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+      --md-elevation-2: 0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Светлая схема Material Design 3 */
+    html[data-theme="light"] {
+      --md-sys-color-background: #fef7ff;
+      --md-sys-color-on-background: #1d1b20;
+      --md-sys-color-surface: #f3edf7;
+      --md-sys-color-surface-variant: #e7e0ec;
+      --md-sys-color-on-surface: #1d1b20;
+      --md-sys-color-on-surface-variant: #49454f;
+      --md-sys-color-primary: #6750a4;
+      --md-sys-color-on-primary: #ffffff;
+      --md-sys-color-outline: #79747e;
+      --md-ripple-color: rgba(255, 255, 255, 0.35);
+
+      --md-elevation-1: 0px 1px 3px 1px rgba(0, 0, 0, 0.08), 0px 1px 2px 0px rgba(0, 0, 0, 0.15);
+      --md-elevation-2: 0px 2px 6px 2px rgba(0, 0, 0, 0.08), 0px 1px 2px 0px rgba(0, 0, 0, 0.15);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background: var(--bg);
-      color: var(--on-bg);
+      background: var(--md-sys-color-background);
+      color: var(--md-sys-color-on-background);
       font-family: 'Google Sans', sans-serif;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 24px;
+      padding: 80px 24px 48px;
+      transition: background .3s ease, color .3s ease;
     }
 
+    /* Панель Top App Bar */
     .app-bar {
       position: fixed;
       top: 0; left: 0; right: 0;
-      height: 56px;
-      background: var(--surface);
-      box-shadow: var(--elev1);
+      height: 64px;
+      background: var(--md-sys-color-surface);
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0 20px;
       z-index: 10;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      transition: background .3s ease;
+    }
+
+    html[data-theme="light"] .app-bar {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    .app-bar-title {
+      font-family: 'Google Sans Mono', monospace;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--md-sys-color-on-surface);
+      letter-spacing: .02em;
+    }
+
+    .controls-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Кнопки в App Bar (Язык и Тема) */
+    .icon-btn, .lang-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: 1px solid var(--md-sys-color-outline);
+      border-radius: 100px;
+      cursor: pointer;
+      color: var(--md-sys-color-primary);
+      transition: background .2s, border-color .2s;
     }
 
     .lang-btn {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      background: transparent;
-      border: 1px solid rgba(255,255,255,.2);
-      border-radius: 20px;
-      padding: 0 12px;
-      height: 32px;
-      cursor: pointer;
-      color: var(--on-bg);
+      gap: 8px;
+      padding: 0 16px;
+      height: 40px;
       font-family: 'Google Sans', sans-serif;
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: .03em;
-      transition: border-color .2s, background .2s;
-    }
-    .lang-btn:hover {
-      background: rgba(255,255,255,.08);
-      border-color: rgba(255,255,255,.4);
-    }
-    .app-bar-title {
-      font-family: 'Google Sans Mono', monospace;
       font-size: 14px;
       font-weight: 500;
-      color: var(--primary);
-      letter-spacing: .05em;
     }
 
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+    }
+
+    .icon-btn:hover, .lang-btn:hover {
+      background: rgba(103, 80, 164, 0.08);
+    }
+    html[data-theme="dark"] .icon-btn:hover, html[data-theme="dark"] .lang-btn:hover {
+      background: rgba(208, 188, 255, 0.08);
+    }
+
+    /* Главная карточка */
     .card {
-      background: var(--surface);
-      border-radius: 16px;
-      box-shadow: var(--elev3);
-      padding: 54px 46px 46px;
-      max-width: 600px;
+      background: var(--md-sys-color-surface);
+      border-radius: 28px;
+      box-shadow: var(--md-elevation-1);
+      padding: 48px 40px;
+      max-width: 680px;
       width: 100%;
       text-align: center;
-      animation: fadeUp .5s ease both;
+      animation: fadeUp .4s cubic-bezier(0.2, 0, 0, 1) both;
+      transition: background .3s ease, box-shadow .3s ease;
     }
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
+      from { opacity: 0; transform: translateY(16px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
     .headline {
-      font-size: 24px;
-      font-weight: 700;
+      font-size: 26px;
+      font-weight: 500;
       line-height: 1.35;
-      color: var(--on-bg);
-      margin-bottom: 12px;
+      color: var(--md-sys-color-on-surface);
+      margin-bottom: 16px;
     }
     .subheadline {
       font-size: 16px;
-      font-weight: 300;
-      color: var(--on-surface);
-      line-height: 1.6;
-      margin-bottom: 40px;
+      font-weight: 400;
+      color: var(--md-sys-color-on-surface-variant);
+      line-height: 1.5;
+      margin-bottom: 36px;
     }
 
     .divider {
       height: 1px;
-      background: var(--divider);
+      background: var(--md-sys-color-surface-variant);
       margin: 0 -40px 32px;
+      opacity: 0.3;
     }
 
+    /* Сетка кнопок */
     .btn-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      justify-content: center;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 14px;
+      width: 100%;
     }
 
+    /* Кнопки */
     .md-btn {
       position: relative;
       overflow: hidden;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      background: var(--primary);
-      color: var(--on-primary);
+      gap: 10px;
+      background: transparent;
+      color: var(--md-sys-color-primary);
       font-family: 'Google Sans', sans-serif;
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 500;
-      letter-spacing: .08em;
-      text-transform: uppercase;
+      letter-spacing: .01em;
       text-decoration: none;
-      border: none;
-      border-radius: 4px;
+      border: 1px solid var(--md-sys-color-outline);
+      border-radius: 100px;
       padding: 0 24px;
       height: 48px;
       cursor: pointer;
-      box-shadow: var(--elev1);
-      transition: box-shadow .2s ease, background .2s ease;
-      min-width: 140px;
+      transition: background .25s ease, color .25s ease, border-color .25s ease, box-shadow .25s ease;
       justify-content: center;
     }
+    
     .md-btn:hover {
-      background: #ce9ffc;
-      box-shadow: var(--elev2);
+      background: var(--md-sys-color-primary);
+      color: var(--md-sys-color-on-primary);
+      border-color: transparent;
+      box-shadow: var(--md-elevation-2);
     }
-    .md-btn:active { box-shadow: none; }
 
+    /* Эффект Ripple */
     .ripple-circle {
       position: absolute;
       border-radius: 50%;
-      background: rgba(0,0,0,.25);
+      background: var(--md-ripple-color);
       transform: scale(0);
-      animation: ripple .5s linear;
+      animation: ripple .4s cubic-bezier(0.1, 0.8, 0.3, 1);
       pointer-events: none;
     }
     @keyframes ripple {
       to { transform: scale(4); opacity: 0; }
     }
 
+    /* Интерактивный кликабельный футер */
     footer {
       margin-top: 48px;
-      font-size: 12px;
-      color: rgba(255,255,255,.3);
+      font-size: 13px;
+      color: var(--md-sys-color-on-surface-variant);
+      opacity: 0.6;
       letter-spacing: .04em;
+      cursor: pointer;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: opacity .2s ease, background .2s ease, transform .1s ease;
+      user-select: none;
     }
-    @media (max-width: 480px) {
-      body { padding: 16px; }
+    footer:hover {
+      opacity: 0.9;
+      background: rgba(103, 80, 164, 0.05);
+    }
+    html[data-theme="dark"] footer:hover {
+      background: rgba(208, 188, 255, 0.05);
+    }
+    footer:active {
+      transform: scale(0.97);
+    }
+    .footer-fade {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+
+    /* Адаптивность */
+    @media (max-width: 600px) {
+      body { padding: 80px 16px 32px; }
 
       .card {
-        padding: 32px 24px 28px;
-        border-radius: 16px;
+        padding: 36px 24px;
+        border-radius: 24px;
       }
 
       .divider { margin: 0 -24px 24px; }
 
-      .headline {
-        font-size: 18px;
-      }
+      .headline { font-size: 21px; }
 
       .subheadline {
         font-size: 14px;
@@ -191,32 +263,32 @@
       }
 
       .btn-grid {
-        flex-direction: column;
-        gap: 12px;
+        grid-template-columns: 1fr;
+        gap: 10px;
       }
 
-      .md-btn {
-        width: 100%;
-        min-width: unset;
-        height: 52px;
-        font-size: 15px;
-      }
-
-      footer { margin-top: 32px; }
+      .md-btn { height: 52px; }
     }
   </style>
 </head>
 <body>
 
   <div class="app-bar">
-    <div style="display:flex; align-items:center; gap:10px">
-      <span class="material-icons" style="font-size:18px">home</span>
+    <div style="display:flex; align-items:center; gap:12px">
+      <span class="material-icons" style="color: var(--md-sys-color-on-surface)">home</span>
       <span class="app-bar-title">nepetapip3.github.io</span>
     </div>
-    <button class="lang-btn" onclick="toggleLang()">
-      <span class="material-icons" style="font-size:16px">translate</span>
-      <span id="lang-label">EN</span>
-    </button>
+    <div class="controls-group">
+      <!-- Кнопка смены темы -->
+      <button class="icon-btn" onclick="toggleTheme()" id="theme-btn" title="Сменить тему">
+        <span class="material-icons">dark_mode</span>
+      </button>
+      <!-- Кнопка смены языка -->
+      <button class="lang-btn" onclick="toggleLang()">
+        <span class="material-icons">translate</span>
+        <span id="lang-label">EN</span>
+      </button>
+    </div>
   </div>
 
   <div class="card">
@@ -226,104 +298,141 @@
     <div class="divider"></div>
 
     <div class="btn-grid">
+      <a class="md-btn" href="https://d6xd.github.io/bio">
+        <span class="material-icons" style="font-size:20px">person</span>
+        <span id="btn-bio">Bio</span>
+      </a>
 
-        <a class="md-btn" href="https://nepetapip3.github.io/bio">
-  <span class="material-icons" style="font-size:18px">person</span>
-  <span id="btn-bio">Bio</span>
-</a>
+      <a class="md-btn" href="https://d6xd.github.io/minigames">
+        <span class="material-icons" style="font-size:20px">sports_esports</span>
+        <span id="btn-minigames">Minigames</span>
+      </a>
 
-<a class="md-btn" href="https://nepetapip3.github.io/minigames">
-  <span class="material-icons" style="font-size:18px">sports_esports</span>
-  <span id="btn-minigames">Minigames</span>
-</a>
+      <a class="md-btn" href="https://d6xd.github.io/dvd-rat">
+        <span class="material-icons" style="font-size:20px">pest_control_rodent</span>
+        <span id="btn-dvd">DVD-Rat</span>
+      </a>
 
-<a class="md-btn" href="https://nepetapip3.github.io/dvd-rat">
-  <span class="material-icons" style="font-size:18px">pest_control_rodent</span>
-  <span id="btn-dvd">DVD-Rat</span>
-</a>
+      <a class="md-btn" href="https://d6xd.github.io/gusenitsy">
+        <span class="material-icons" style="font-size:20px">bug_report</span>
+        <span id="btn-gusenitsy">GUSENITSY</span>
+      </a>
 
-<a class="md-btn" href="https://nepetapip3.github.io/gusenitsy">
-  <span class="material-icons" style="font-size:18px">bug_report</span>
-  <span id="btn-gusenitsy">GUSENITSY</span>
-</a>
-
-<a class="md-btn" href="https://nepetapip3.github.io/v0dol4z_shakal1zator">
-  <span class="material-icons" style="font-size:18px">add_photo_alternate</span>
-  <span id="btn-shakal">JPEG CORRUPT.</span>
-</a>
-
-
+      <a class="md-btn" href="https://d6xd.github.io/v0dol4z_shakal1zator">
+        <span class="material-icons" style="font-size:20px">add_photo_alternate</span>
+        <span id="btn-shakal">JPEG CORRUPT.</span>
+      </a>
     </div>
   </div>
 
-  <footer id="footer-text">nepetapip3 · github.io</footer>
+  <!-- Футер теперь с подсказкой при наведении -->
+  <footer id="footer-text" onclick="changeFooterText()" title="Кликни, чтобы изменить фразу">nepetapip3 · github.io</footer>
 
   <script>
-    document.querySelectorAll('.md-btn').forEach(btn => {
+    // Ripple-эффект для кнопок
+    document.querySelectorAll('.md-btn, .lang-btn, .icon-btn').forEach(btn => {
       btn.addEventListener('click', function (e) {
         const circle = document.createElement('span');
         const rect   = this.getBoundingClientRect();
         const size   = Math.max(rect.width, rect.height);
+        
         circle.className = 'ripple-circle';
-        circle.style.cssText = `
-          width:${size}px; height:${size}px;
-          left:${e.clientX - rect.left - size/2}px;
-          top:${e.clientY  - rect.top  - size/2}px;
-        `;
+        circle.style.width = circle.style.height = `${size}px`;
+        circle.style.left = `${e.clientX - rect.left - size/2}px`;
+        circle.style.top = `${e.clientY - rect.top - size/2}px`;
+        
         this.appendChild(circle);
         circle.addEventListener('animationend', () => circle.remove());
       });
     });
+
+    // Логика футера (Идея 5)
     const footerVariants = [
-  "nepetapip3.lol?",
-  "nepetacsv? who is this?",
-  "nepetapip3",
-  " sudo rm -rf --no-preserve-root /* ",
-  "404 not found",
-  "what is nekobrawl?",
-  "i use cachyos btw :3",
-  "does anyone actually read this?",
-  "lol",
-  "whoami"
-];
+      "nepetapip3.lol?",
+      "nepetacsv? who is this?",
+      "nepetapip3",
+      " sudo rm -rf --no-preserve-root /* ",
+      "404 not found",
+      "what is nekobrawl?",
+      "i use cachyos btw :3",
+      "does anyone actually read this?",
+      "lol",
+      "whoami"
+    ];
 
-document.getElementById('footer-text').textContent =
-  footerVariants[Math.floor(Math.random() * footerVariants.length)];
+    const footerEl = document.getElementById('footer-text');
+    
+    // Инициализация случайного текста
+    footerEl.textContent = footerVariants[Math.floor(Math.random() * footerVariants.length)];
 
+    function changeFooterText() {
+      footerEl.style.transition = 'opacity 0.15s ease, transform 0.15s ease';
+      footerEl.classList.add('footer-fade');
+      
+      setTimeout(() => {
+        let currentText = footerEl.textContent;
+        let newText = currentText;
+        // Гарантируем, что фраза изменится на другую
+        while (newText === currentText) {
+          newText = footerVariants[Math.floor(Math.random() * footerVariants.length)];
+        }
+        footerEl.textContent = newText;
+        footerEl.classList.remove('footer-fade');
+      }, 150000 / 1000); // 150мс на исчезновение
+    }
+
+    // Логика Темы (Идея 2)
+    function toggleTheme() {
+      const html = document.documentElement;
+      const themeBtnIcon = document.querySelector('#theme-btn .material-icons');
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      html.setAttribute('data-theme', newTheme);
+      themeBtnIcon.textContent = newTheme === 'dark' ? 'dark_mode' : 'light_mode';
+      localStorage.setItem('theme', newTheme);
+    }
+
+    // Восстановление сохраненной темы при загрузке страницы
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    document.querySelector('#theme-btn .material-icons').textContent = savedTheme === 'dark' ? 'dark_mode' : 'light_mode';
+
+    // Языковая логика
     const translations = {
-  en: {
-    headline: "Hey! It looks like you've landed on the homepage of nepetapip3.github.io.",
-    subheadline: "You can choose where to go next by clicking the buttons below.",
-    bio: "Bio",
-    minigames: "Minigames",
-    dvd: "DVD-Rat",
-    gusenitsy: "GUSENITSY",
-    shakal: "shakal1zator"
-  },
-  ru: {
-    headline: "Эй! Кажется, вы попали на заглавную страницу nepetapip3.github.io.",
-    subheadline: "Вы можете выбрать куда пойти дальше, нажав кнопки ниже.",
-    bio: "Био",
-    minigames: "Мини-игры",
-    dvd: "DVD-Крысюк",
-    gusenitsy: "ГУСЕНИЦЫ",
-    shakal: "shakal1zator"
-  }
-};
+      en: {
+        headline: "Hey! It looks like you've landed on the homepage of nepetapip3.github.io.",
+        subheadline: "You can choose where to go next by clicking the buttons below.",
+        bio: "Bio",
+        minigames: "Minigames",
+        dvd: "DVD-Rat",
+        gusenitsy: "GUSENITSY",
+        shakal: "shakal1zator"
+      },
+      ru: {
+        headline: "Эй! Кажется, вы попали на заглавную страницу nepetapip3.github.io.",
+        subheadline: "Вы можете выбрать куда пойти дальше, нажав кнопки ниже.",
+        bio: "Био",
+        minigames: "Мини-игры",
+        dvd: "DVD-Крысюк",
+        gusenitsy: "ГУСЕНИЦЫ",
+        shakal: "shakal1zator"
+      }
+    };
 
     let currentLang = 'en';
 
     function toggleLang() {
-  currentLang = currentLang === 'en' ? 'ru' : 'en';
-  document.getElementById('lang-label').textContent = currentLang === 'en' ? 'EN' : 'RU';
-  document.querySelector('.headline').textContent = translations[currentLang].headline;
-  document.querySelector('.subheadline').textContent = translations[currentLang].subheadline;
-  document.getElementById('btn-bio').textContent = translations[currentLang].bio;
-  document.getElementById('btn-minigames').textContent = translations[currentLang].minigames;
-  document.getElementById('btn-dvd').textContent = translations[currentLang].dvd;
-  document.getElementById('btn-gusenitsy').textContent = translations[currentLang].gusenitsy;
-  document.getElementById('btn-shakal').textContent = translations[currentLang].shakal;
-}
+      currentLang = currentLang === 'en' ? 'ru' : 'en';
+      document.getElementById('lang-label').textContent = currentLang === 'en' ? 'EN' : 'RU';
+      document.querySelector('.headline').textContent = translations[currentLang].headline;
+      document.querySelector('.subheadline').textContent = translations[currentLang].subheadline;
+      document.getElementById('btn-bio').textContent = translations[currentLang].bio;
+      document.getElementById('btn-minigames').textContent = translations[currentLang].minigames;
+      document.getElementById('btn-dvd').textContent = translations[currentLang].dvd;
+      document.getElementById('btn-gusenitsy').textContent = translations[currentLang].gusenitsy;
+      document.getElementById('btn-shakal').textContent = translations[currentLang].shakal;
+    }
   </script>
 </body>
 </html>
