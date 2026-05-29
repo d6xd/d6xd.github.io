@@ -11,8 +11,8 @@ A tree of my hobby web projects.
 vibecoding web things and not only, i'm also sometimes writin' on Python and .sh, writing code using ![Claude](https://img.shields.io/badge/Claude-D97757?logo=claude&logoColor=fff) and edit it in [![VSCodium](https://img.shields.io/badge/VSCodium-2F80ED?logo=vscodium&logoColor=fff)](#)  
 i use Cachy OS on GNOME btw
 ## projects
-**[bio](https://nepetapip3.github.io/bio)**  
+**[bio](https://d6xd.github.io/bio)**  
 card with my biography, and social links (it is not relevant at the moment)
 
-**[v0dol4z_shakal1zator](https://nepetapip3.github.io/v0dol4z_shakal1zator)**  
+**[v0dol4z_shakal1zator](https://d6xd.github.io/v0dol4z_shakal1zator)**  
 degrades the quality of your photos, making them more meme-y. *yes.*
