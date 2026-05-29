@@ -4,44 +4,43 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="icon" type="image/png" href="ico.jpg">
-  <title>nepetapip3</title>
-  <!-- Подключаем оригинальный шрифт Google Sans и Mono -->
+  <title>d6xd</title>
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Mono:wght@400;500&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
   <style>
     :root {
-      /* Палитра Material Design 3 (Тёмная схема по умолчанию) */
-      --md-sys-color-background: #141218;
-      --md-sys-color-on-background: #e6e1e5;
-      --md-sys-color-surface: #211f26;
-      --md-sys-color-surface-variant: #49454f;
-      --md-sys-color-on-surface: #e6e1e5;
-      --md-sys-color-on-surface-variant: #cac4d0;
-      --md-sys-color-primary: #d0bcff;
-      --md-sys-color-on-primary: #381e72;
-      --md-sys-color-outline: #938f99;
-      --md-ripple-color: rgba(56, 30, 114, 0.25);
+      /* Палитра Material Design 3 (Тёмно-серая монохромная схема) */
+      --md-sys-color-background: #121212;
+      --md-sys-color-on-background: #f2f2f2;
+      --md-sys-color-surface: #1e1e1e;
+      --md-sys-color-surface-variant: #333333;
+      --md-sys-color-on-surface: #f2f2f2;
+      --md-sys-color-on-surface-variant: #b3b3b3;
+      --md-sys-color-primary: #ffffff;
+      --md-sys-color-on-primary: #121212;
+      --md-sys-color-outline: #555555;
+      --md-ripple-color: rgba(255, 255, 255, 0.15);
       
       /* Тени MD3 */
-      --md-elevation-1: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
-      --md-elevation-2: 0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+      --md-elevation-1: 0px 1px 3px 1px rgba(0, 0, 0, 0.3), 0px 1px 2px 0px rgba(0, 0, 0, 0.5);
+      --md-elevation-2: 0px 2px 6px 2px rgba(0, 0, 0, 0.3), 0px 1px 2px 0px rgba(0, 0, 0, 0.5);
     }
 
-    /* Светлая схема Material Design 3 */
+    /* Светлая монохромная схема */
     html[data-theme="light"] {
-      --md-sys-color-background: #fef7ff;
-      --md-sys-color-on-background: #1d1b20;
-      --md-sys-color-surface: #f3edf7;
-      --md-sys-color-surface-variant: #e7e0ec;
-      --md-sys-color-on-surface: #1d1b20;
-      --md-sys-color-on-surface-variant: #49454f;
-      --md-sys-color-primary: #6750a4;
+      --md-sys-color-background: #f5f5f5;
+      --md-sys-color-on-background: #121212;
+      --md-sys-color-surface: #ffffff;
+      --md-sys-color-surface-variant: #e0e0e0;
+      --md-sys-color-on-surface: #121212;
+      --md-sys-color-on-surface-variant: #666666;
+      --md-sys-color-primary: #121212;
       --md-sys-color-on-primary: #ffffff;
-      --md-sys-color-outline: #79747e;
-      --md-ripple-color: rgba(255, 255, 255, 0.35);
+      --md-sys-color-outline: #cccccc;
+      --md-ripple-color: rgba(0, 0, 0, 0.1);
 
-      --md-elevation-1: 0px 1px 3px 1px rgba(0, 0, 0, 0.08), 0px 1px 2px 0px rgba(0, 0, 0, 0.15);
-      --md-elevation-2: 0px 2px 6px 2px rgba(0, 0, 0, 0.08), 0px 1px 2px 0px rgba(0, 0, 0, 0.15);
+      --md-elevation-1: 0px 1px 3px 1px rgba(0, 0, 0, 0.05), 0px 1px 2px 0px rgba(0, 0, 0, 0.1);
+      --md-elevation-2: 0px 2px 6px 2px rgba(0, 0, 0, 0.05), 0px 1px 2px 0px rgba(0, 0, 0, 0.1);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -101,7 +100,7 @@
       border: 1px solid var(--md-sys-color-outline);
       border-radius: 100px;
       cursor: pointer;
-      color: var(--md-sys-color-primary);
+      color: var(--md-sys-color-on-surface);
       transition: background .2s, border-color .2s;
     }
 
@@ -120,10 +119,10 @@
     }
 
     .icon-btn:hover, .lang-btn:hover {
-      background: rgba(103, 80, 164, 0.08);
+      background: rgba(0, 0, 0, 0.05);
     }
     html[data-theme="dark"] .icon-btn:hover, html[data-theme="dark"] .lang-btn:hover {
-      background: rgba(208, 188, 255, 0.08);
+      background: rgba(255, 255, 255, 0.05);
     }
 
     /* Главная карточка */
@@ -181,7 +180,7 @@
       align-items: center;
       gap: 10px;
       background: transparent;
-      color: var(--md-sys-color-primary);
+      color: var(--md-sys-color-on-surface);
       font-family: 'Google Sans', sans-serif;
       font-size: 15px;
       font-weight: 500;
@@ -231,10 +230,10 @@
     }
     footer:hover {
       opacity: 0.9;
-      background: rgba(103, 80, 164, 0.05);
+      background: rgba(0, 0, 0, 0.03);
     }
     html[data-theme="dark"] footer:hover {
-      background: rgba(208, 188, 255, 0.05);
+      background: rgba(255, 255, 255, 0.03);
     }
     footer:active {
       transform: scale(0.97);
@@ -276,14 +275,12 @@
   <div class="app-bar">
     <div style="display:flex; align-items:center; gap:12px">
       <span class="material-icons" style="color: var(--md-sys-color-on-surface)">home</span>
-      <span class="app-bar-title">nepetapip3.github.io</span>
+      <span class="app-bar-title">d6xd.github.io</span>
     </div>
     <div class="controls-group">
-      <!-- Кнопка смены темы -->
       <button class="icon-btn" onclick="toggleTheme()" id="theme-btn" title="Сменить тему">
         <span class="material-icons">dark_mode</span>
       </button>
-      <!-- Кнопка смены языка -->
       <button class="lang-btn" onclick="toggleLang()">
         <span class="material-icons">translate</span>
         <span id="lang-label">EN</span>
@@ -292,7 +289,7 @@
   </div>
 
   <div class="card">
-    <h1 class="headline">Hey! It looks like you've landed on the homepage of nepetapip3.github.io.</h1>
+    <h1 class="headline">Hey! It looks like you've landed on the homepage d6xd.github.io.</h1>
     <p class="subheadline">You can choose where to go next by clicking the buttons below.</p>
 
     <div class="divider"></div>
@@ -325,11 +322,9 @@
     </div>
   </div>
 
-  <!-- Футер теперь с подсказкой при наведении -->
-  <footer id="footer-text" onclick="changeFooterText()" title="Кликни, чтобы изменить фразу">nepetapip3 · github.io</footer>
+  <footer id="footer-text" onclick="changeFooterText()" title="Кликни, чтобы изменить фразу">d6xd · github.io</footer>
 
   <script>
-    // Ripple-эффект для кнопок
     document.querySelectorAll('.md-btn, .lang-btn, .icon-btn').forEach(btn => {
       btn.addEventListener('click', function (e) {
         const circle = document.createElement('span');
@@ -346,11 +341,10 @@
       });
     });
 
-    // Логика футера (Идея 5)
     const footerVariants = [
-      "nepetapip3.lol?",
+      "d6xd.lol?",
       "nepetacsv? who is this?",
-      "nepetapip3",
+      "d6xd",
       " sudo rm -rf --no-preserve-root /* ",
       "404 not found",
       "what is nekobrawl?",
@@ -362,7 +356,6 @@
 
     const footerEl = document.getElementById('footer-text');
     
-    // Инициализация случайного текста
     footerEl.textContent = footerVariants[Math.floor(Math.random() * footerVariants.length)];
 
     function changeFooterText() {
@@ -372,16 +365,14 @@
       setTimeout(() => {
         let currentText = footerEl.textContent;
         let newText = currentText;
-        // Гарантируем, что фраза изменится на другую
         while (newText === currentText) {
           newText = footerVariants[Math.floor(Math.random() * footerVariants.length)];
         }
         footerEl.textContent = newText;
         footerEl.classList.remove('footer-fade');
-      }, 150000 / 1000); // 150мс на исчезновение
+      }, 150);
     }
 
-    // Логика Темы (Идея 2)
     function toggleTheme() {
       const html = document.documentElement;
       const themeBtnIcon = document.querySelector('#theme-btn .material-icons');
@@ -393,15 +384,13 @@
       localStorage.setItem('theme', newTheme);
     }
 
-    // Восстановление сохраненной темы при загрузке страницы
     const savedTheme = localStorage.getItem('theme') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);
     document.querySelector('#theme-btn .material-icons').textContent = savedTheme === 'dark' ? 'dark_mode' : 'light_mode';
 
-    // Языковая логика
     const translations = {
       en: {
-        headline: "Hey! It looks like you've landed on the homepage of nepetapip3.github.io.",
+        headline: "Hey! It looks like you've landed on the homepage of d6xd.github.io.",
         subheadline: "You can choose where to go next by clicking the buttons below.",
         bio: "Bio",
         minigames: "Minigames",
@@ -410,7 +399,7 @@
         shakal: "shakal1zator"
       },
       ru: {
-        headline: "Эй! Кажется, вы попали на заглавную страницу nepetapip3.github.io.",
+        headline: "Эй! Кажется, вы попали на заглавную страницу d6xd.github.io.",
         subheadline: "Вы можете выбрать куда пойти дальше, нажав кнопки ниже.",
         bio: "Био",
         minigames: "Мини-игры",

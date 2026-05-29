@@ -5,43 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="icon" type="image/png" href="icon.jpg">
   <title>nepetapip3 · bio</title>
-  <!-- Подключаем оригинальный шрифт Google Sans и Mono -->
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Mono:wght@400;500&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
   <style>
     :root {
-      /* Палитра Material Design 3 (Тёмная схема) */
-      --md-sys-color-background: #141218;
-      --md-sys-color-on-background: #e6e1e5;
-      --md-sys-color-surface: #211f26;
-      --md-sys-color-surface-variant: #49454f;
-      --md-sys-color-on-surface: #e6e1e5;
-      --md-sys-color-on-surface-variant: #cac4d0;
-      --md-sys-color-primary: #d0bcff;
-      --md-sys-color-on-primary: #381e72;
-      --md-sys-color-outline: #938f99;
-      --md-ripple-color: rgba(56, 30, 114, 0.25);
+      /* Палитра Material Design 3 (Тёмно-серая монохромная схема) */
+      --md-sys-color-background: #121212;
+      --md-sys-color-on-background: #f2f2f2;
+      --md-sys-color-surface: #1e1e1e;
+      --md-sys-color-surface-variant: #333333;
+      --md-sys-color-on-surface: #f2f2f2;
+      --md-sys-color-on-surface-variant: #b3b3b3;
+      --md-sys-color-primary: #ffffff;
+      --md-sys-color-on-primary: #121212;
+      --md-sys-color-outline: #555555;
+      --md-ripple-color: rgba(255, 255, 255, 0.15);
       
-      /* Тени MD3 */
-      --md-elevation-1: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
-      --md-elevation-2: 0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+      --md-elevation-1: 0px 1px 3px 1px rgba(0, 0, 0, 0.3), 0px 1px 2px 0px rgba(0, 0, 0, 0.5);
+      --md-elevation-2: 0px 2px 6px 2px rgba(0, 0, 0, 0.3), 0px 1px 2px 0px rgba(0, 0, 0, 0.5);
     }
 
-    /* Светлая схема Material Design 3 */
     html[data-theme="light"] {
-      --md-sys-color-background: #fef7ff;
-      --md-sys-color-on-background: #1d1b20;
-      --md-sys-color-surface: #f3edf7;
-      --md-sys-color-surface-variant: #e7e0ec;
-      --md-sys-color-on-surface: #1d1b20;
-      --md-sys-color-on-surface-variant: #49454f;
-      --md-sys-color-primary: #6750a4;
+      --md-sys-color-background: #f5f5f5;
+      --md-sys-color-on-background: #121212;
+      --md-sys-color-surface: #ffffff;
+      --md-sys-color-surface-variant: #e0e0e0;
+      --md-sys-color-on-surface: #121212;
+      --md-sys-color-on-surface-variant: #666666;
+      --md-sys-color-primary: #121212;
       --md-sys-color-on-primary: #ffffff;
-      --md-sys-color-outline: #79747e;
-      --md-ripple-color: rgba(255, 255, 255, 0.35);
+      --md-sys-color-outline: #cccccc;
+      --md-ripple-color: rgba(0, 0, 0, 0.1);
 
-      --md-elevation-1: 0px 1px 3px 1px rgba(0, 0, 0, 0.08), 0px 1px 2px 0px rgba(0, 0, 0, 0.15);
-      --md-elevation-2: 0px 2px 6px 2px rgba(0, 0, 0, 0.08), 0px 1px 2px 0px rgba(0, 0, 0, 0.15);
+      --md-elevation-1: 0px 1px 3px 1px rgba(0, 0, 0, 0.05), 0px 1px 2px 0px rgba(0, 0, 0, 0.1);
+      --md-elevation-2: 0px 2px 6px 2px rgba(0, 0, 0, 0.05), 0px 1px 2px 0px rgba(0, 0, 0, 0.1);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -59,7 +56,6 @@
       transition: background .3s ease, color .3s ease;
     }
 
-    /* Панель Top App Bar */
     .app-bar {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -91,7 +87,6 @@
       gap: 8px;
     }
 
-    /* Кнопки в App Bar */
     .icon-btn, .lang-btn {
       display: flex;
       align-items: center;
@@ -100,7 +95,7 @@
       border: 1px solid var(--md-sys-color-outline);
       border-radius: 100px;
       cursor: pointer;
-      color: var(--md-sys-color-primary);
+      color: var(--md-sys-color-on-surface);
       transition: background .2s, border-color .2s;
     }
 
@@ -119,13 +114,13 @@
     }
 
     .icon-btn:hover, .lang-btn:hover {
-      background: rgba(103, 80, 164, 0.08);
+      background: rgba(0, 0, 0, 0.05);
     }
     html[data-theme="dark"] .icon-btn:hover, html[data-theme="dark"] .lang-btn:hover {
-      background: rgba(208, 188, 255, 0.08);
+      background: rgba(255, 255, 255, 0.05);
     }
 
-    /* Главная карточка профиля */
+    /* Безопасная анимация через CSS-классы */
     .card {
       background: var(--md-sys-color-surface);
       border-radius: 28px;
@@ -134,12 +129,17 @@
       max-width: 520px;
       width: 100%;
       text-align: center;
-      animation: fadeUp .4s cubic-bezier(0.2, 0, 0, 1) both;
-      transition: background .3s ease, box-shadow .3s ease;
+      
+      /* Исходное состояние: скрыта и смещена вниз */
+      opacity: 0;
+      transform: translateY(16px);
+      transition: background .3s ease, box-shadow .3s ease, opacity .4s cubic-bezier(0.2, 0, 0, 1), transform .4s cubic-bezier(0.2, 0, 0, 1);
     }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(16px); }
-      to   { opacity: 1; transform: translateY(0); }
+
+    /* Класс для запуска анимации */
+    .card.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .profile {
@@ -192,7 +192,6 @@
       opacity: 0.3;
     }
 
-    /* Сетка соцсетей */
     .btn-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
@@ -200,7 +199,6 @@
       width: 100%;
     }
 
-    /* Кнопки в стиле MD3 Outlined */
     .md-btn {
       position: relative;
       overflow: hidden;
@@ -208,7 +206,7 @@
       align-items: center;
       gap: 10px;
       background: transparent;
-      color: var(--md-sys-color-primary);
+      color: var(--md-sys-color-on-surface);
       font-family: 'Google Sans', sans-serif;
       font-size: 15px;
       font-weight: 500;
@@ -230,7 +228,6 @@
       box-shadow: var(--md-elevation-2);
     }
 
-    /* Эффект Ripple */
     .ripple-circle {
       position: absolute;
       border-radius: 50%;
@@ -243,7 +240,6 @@
       to { transform: scale(4); opacity: 0; }
     }
 
-    /* Интерактивный кликабельный футер */
     footer {
       margin-top: 48px;
       font-size: 13px;
@@ -258,10 +254,10 @@
     }
     footer:hover {
       opacity: 0.9;
-      background: rgba(103, 80, 164, 0.05);
+      background: rgba(0, 0, 0, 0.03);
     }
     html[data-theme="dark"] footer:hover {
-      background: rgba(208, 188, 255, 0.05);
+      background: rgba(255, 255, 255, 0.03);
     }
     footer:active { transform: scale(0.97); }
     .footer-fade {
@@ -269,7 +265,6 @@
       transform: translateY(-4px);
     }
 
-    /* Мобильная адаптивность */
     @media (max-width: 600px) {
       body { padding: 80px 16px 32px; }
 
@@ -307,11 +302,9 @@
       <span class="app-bar-title">nepetapip3 · bio</span>
     </div>
     <div class="controls-group">
-      <!-- Кнопка смены темы -->
       <button class="icon-btn" onclick="toggleTheme()" id="theme-btn" title="Сменить тему">
         <span class="material-icons">dark_mode</span>
       </button>
-      <!-- Кнопка смены языка -->
       <button class="lang-btn" onclick="toggleLang()">
         <span class="material-icons">translate</span>
         <span id="lang-label">RU</span>
@@ -319,7 +312,7 @@
     </div>
   </div>
 
-  <div class="card">
+  <div class="card" id="main-card">
     <div class="profile">
       <a href="easteregg.jpg" class="avatar-link">
         <img src="avatarka.jpg" class="avatar" alt="avatar">
@@ -352,7 +345,13 @@
   <footer id="footer-text" onclick="changeFooterText()" title="Кликни, чтобы изменить фразу">nepetapip3 · bio</footer>
 
   <script>
-    // Ripple-эффект для интерактивных элементов
+    // Плавный въезд карточки сразу после загрузки DOM
+    document.addEventListener("DOMContentLoaded", () => {
+      requestAnimationFrame(() => {
+        document.getElementById("main-card").classList.add("visible");
+      });
+    });
+
     document.querySelectorAll('.md-btn, .lang-btn, .icon-btn').forEach(btn => {
       btn.addEventListener('click', function (e) {
         const circle = document.createElement('span');
@@ -369,7 +368,6 @@
       });
     });
 
-    // Логика футера
     const footerVariants = [
       "nepetapip3.lol?",
       "nepetacsv? who is this?",
@@ -401,7 +399,6 @@
       }, 150);
     }
 
-    // Логика переключения тем
     function toggleTheme() {
       const html = document.documentElement;
       const themeBtnIcon = document.querySelector('#theme-btn .material-icons');
@@ -413,12 +410,10 @@
       localStorage.setItem('theme', newTheme);
     }
 
-    // Подгрузка темы из памяти
     const savedTheme = localStorage.getItem('theme') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);
     document.querySelector('#theme-btn .material-icons').textContent = savedTheme === 'dark' ? 'dark_mode' : 'light_mode';
 
-    // Языковая локализация
     const translations = {
       ru: {
         desc: "био уже не релевантно, я любитель, разрабатываю разные проекты для себя и все",
