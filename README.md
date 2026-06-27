@@ -4,11 +4,11 @@ A tree of my hobby web projects.
 
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black) [![Claude](https://img.shields.io/badge/Claude-D97757?logo=claude&logoColor=fff)](#)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black) [![Gemini](https://img.shields.io/badge/Google%20Gemini-886FBF?logo=googlegemini&logoColor=fff)](#)
 ## abt repo
 ![Repo Size](https://img.shields.io/github/repo-size/d6xd/d6xd.github.io) ![Commits](https://img.shields.io/github/commit-activity/m/d6xd/d6xd.github.io)
 ## something abt me
-vibecoding web things and not only, i'm also sometimes writin' on Python and .sh, writing code using ![Claude](https://img.shields.io/badge/Claude-D97757?logo=claude&logoColor=fff) and edit it in [![VSCodium](https://img.shields.io/badge/VSCodium-2F80ED?logo=vscodium&logoColor=fff)](#)  
+vibecoding web things and not only, i'm also sometimes writin' on Python and .sh, writing code using [![Gemini](https://img.shields.io/badge/Google%20Gemini-886FBF?logo=googlegemini&logoColor=fff)](#) and edit it in [![VSCodium](https://img.shields.io/badge/VSCodium-2F80ED?logo=vscodium&logoColor=fff)](#)  
 i use Cachy OS on GNOME btw
 ## projects
 **[bio](https://d6xd.github.io/bio)**  
