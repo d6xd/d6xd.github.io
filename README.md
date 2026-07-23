@@ -1,4 +1,6 @@
-# d6xd.github.io
+# Warning: This is just a hobby project created with AI (vibecoded)!
+
+## d6xd.github.io
 
 A tree of my hobby web projects.
 
