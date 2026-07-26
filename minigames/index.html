@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
 <link rel="icon" type="image/png" href="icon_minigames.jpg">
 <title>minigames — nepetapip3</title>
 <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -160,7 +161,7 @@ html[data-theme="dark"] .btn:hover { background: rgba(255, 255, 255, 0.05); }
 .msg-err { background: rgba(229,115,115,.1); border: 1px solid rgba(229,115,115,.3); color: var(--red); }
 
 #snake-wrap { display: flex; flex-direction: column; align-items: center; gap: 16px; }
-#sn-cards { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.cards-row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
 .snake-cw { position: relative; display: inline-block; }
 #snake-canvas { background: #161616; border: 1px solid var(--md-sys-color-outline); border-radius: 16px; display: block; max-width: 100%; }
 #snake-ov { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(18,18,18,.9); border-radius: 16px; gap: 16px; }
@@ -189,7 +190,7 @@ html[data-theme="light"] .aim-tgt { background: radial-gradient(circle at 35% 35
 #cps-area.running { border-color: var(--md-sys-color-primary); }
 #cps-num { font-family: 'Google Sans Mono', monospace; font-size: 64px; font-weight: 700; color: var(--md-sys-color-on-surface); line-height: 1; }
 #cps-lbl { font-size: 13px; color: var(--md-sys-color-on-surface-variant); text-transform: uppercase; letter-spacing: .05em; margin-top: 8px; font-weight: 500; }
-#cps-prog { position: absolute; bottom: 0; left: 0; height: 4px; background: var(--md-blue); width: 100%; }
+#cps-prog { position: absolute; bottom: 0; left: 0; height: 4px; background: var(--blue); width: 100%; }
 #cps-cards { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; width: 100%; }
 #cps-hist { display: flex; gap: 3px; align-items: flex-end; height: 50px; width: 100%; max-width: 480px; margin-top: 8px; }
 .cps-b { flex: 1; background: var(--md-sys-color-primary); opacity: .4; border-radius: 2px 2px 0 0; min-width: 4px; }
@@ -219,12 +220,6 @@ html[data-theme="light"] .aim-tgt { background: radial-gradient(circle at 35% 35
 .g2048-tile[data-col="1"] { left: 90px; }
 .g2048-tile[data-col="2"] { left: 168px; }
 .g2048-tile[data-col="3"] { left: 246px; }
-
-.g2048-tile.tile-dead {
-  display: none !important;
-  opacity: 0 !important;
-  transition: none !important;
-}
 
 .tile-2    { background: #222; color: #888; }
 .tile-4    { background: #2d2d2d; color: #aaa; }
@@ -339,7 +334,7 @@ footer:active { transform: scale(0.97); }
   <h2>🐍 Змейка</h2>
   <p class="sub">Стрелки / WASD. На телефоне — кнопки ниже.</p>
   <div id="snake-wrap">
-    <div id="sn-cards">
+    <div class="cards-row">
       <div class="card"><div class="v" id="sn-score">0</div><div class="l">Счёт</div></div>
       <div class="card"><div class="v" id="sn-best">0</div><div class="l">Рекорд</div></div>
       <div class="card"><div class="v" id="sn-lvl">1</div><div class="l">Уровень</div></div>
@@ -378,7 +373,7 @@ footer:active { transform: scale(0.97); }
     <div id="aim-arena">
       <div id="aim-flash"></div>
       <div class="aim-ov" id="aim-ov">
-        <div style="color:var(--md-sys-color-on-surface-variant);font-size:14px;">Кликай по мишеням!</div>
+        <div id="aim-ov-msg" style="color:var(--md-sys-color-on-surface-variant);font-size:14px;">Кликай по мишеням!</div>
         <button class="btn blue" id="aim-start-btn">▶ Старт</button>
       </div>
     </div>
@@ -413,7 +408,7 @@ footer:active { transform: scale(0.97); }
   <h2>🔢 2048</h2>
   <p class="sub">Используй WASD / Стрелки на ПК или свайпы на телефоне.</p>
   <div id="g2048-wrap">
-    <div id="sn-cards">
+    <div class="cards-row">
       <div class="card"><div class="v" id="g2048-score">0</div><div class="l">Счёт</div></div>
       <div class="card"><div class="v" id="g2048-best">0</div><div class="l">Рекорд</div></div>
     </div>
@@ -457,6 +452,7 @@ function applyRipple(btn, e) {
 }
 
 function switchTab(name, btn) {
+  if (name !== 'snake') snPause();
   document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
   document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
   document.getElementById('s-'+name).classList.add('active');
@@ -482,8 +478,8 @@ function gReset() {
 function gGuess() {
   if (!gActive) { gReset(); return; }
   var inp = document.getElementById('g-input');
-  var n = parseInt(inp.value);
-  if (!n || n < 1 || n > 100) { gMsg('Введи число от 1 до 100','msg-err'); return; }
+  var n = Number(inp.value.trim());
+  if (!Number.isInteger(n) || n < 1 || n > 100) { gMsg('Введи число от 1 до 100','msg-err'); return; }
   gCount++;
   document.getElementById('g-cnt').textContent = gCount;
   var chip = document.createElement('span');
@@ -516,20 +512,35 @@ function gMsg(t, cls) {
 gReset();
 
 var SZ=20, COLS=16, ROWS=16;
-var snBody, snFood, snDirQ, snDir_, snIval, snSc=0, snBest=0;
+var snBody, snFood, snDirQ, snDir_, snIval=null, snSc=0, snBest=0;
+var snSpeed=120, snPaused=false;
 var snCV = document.getElementById('snake-canvas');
 var snCX = snCV.getContext('2d');
 
 function snStart() {
   document.getElementById('snake-ov').style.display='none';
+  clearInterval(snIval);
+  if (snPaused) {
+    snPaused = false;
+    snIval = setInterval(snTick, snSpeed);
+    return;
+  }
   snBody = [{x:8,y:8},{x:7,y:8},{x:6,y:8}];
   snDir_ = {x:1,y:0}; snDirQ = [];
-  snSc = 0;
+  snSc = 0; snSpeed = 120;
   document.getElementById('sn-score').textContent = 0;
   document.getElementById('sn-lvl').textContent = 1;
   snPlace();
-  clearInterval(snIval);
-  snIval = setInterval(snTick, 120);
+  snIval = setInterval(snTick, snSpeed);
+}
+
+function snPause() {
+  if (!snIval) return;
+  clearInterval(snIval); snIval = null;
+  snPaused = true;
+  document.getElementById('sn-ov-title').textContent = '⏸ Пауза';
+  document.getElementById('sn-btn').textContent = '▶ Продолжить';
+  document.getElementById('snake-ov').style.display = 'flex';
 }
 function snDir(d) {
   var m = {U:{x:0,y:-1},D:{x:0,y:1},L:{x:-1,y:0},R:{x:1,y:0}};
@@ -559,7 +570,7 @@ function snTick() {
   if (snDirQ.length) snDir_=snDirQ.shift();
   var h={x:snBody[0].x+snDir_.x,y:snBody[0].y+snDir_.y};
   if (h.x<0||h.x>=COLS||h.y<0||h.y>=ROWS||snBody.some(function(s){return s.x===h.x&&s.y===h.y;})) {
-    clearInterval(snIval);
+    clearInterval(snIval); snIval=null; snPaused=false;
     document.getElementById('sn-ov-title').textContent='💀 Конец! Счёт: '+snSc;
     document.getElementById('sn-btn').textContent='🔄 Заново';
     document.getElementById('snake-ov').style.display='flex';
@@ -572,7 +583,7 @@ function snTick() {
     if (snSc>snBest){snBest=snSc;document.getElementById('sn-best').textContent=snBest;}
     document.getElementById('sn-lvl').textContent=Math.floor(snSc/5)+1;
     snPlace();
-    if (snSc%5===0){clearInterval(snIval);snIval=setInterval(snTick,Math.max(55,120-Math.floor(snSc/5)*12));}
+    if (snSc%5===0){snSpeed=Math.max(55,120-Math.floor(snSc/5)*12);clearInterval(snIval);snIval=setInterval(snTick,snSpeed);}
   } else { snBody.pop(); }
   snDraw();
 }
@@ -669,9 +680,9 @@ function aimEnd() {
   var acc = (aimHits+aimMiss) ? aimHits/(aimHits+aimMiss)*100 : 0;
   aimBarFill.style.width = acc.toFixed(0)+'%';
   aimResRow.style.display = 'block';
-  aimOv.innerHTML = '<div style="color:var(--md-sys-color-on-surface-variant);font-size:15px;">Раунд окончен! Точность: '+acc.toFixed(0)+'%</div><button class="btn blue" id="aim-start-btn">▶ Ещё раз</button>';
+  document.getElementById('aim-ov-msg').textContent = 'Раунд окончен! Точность: '+acc.toFixed(0)+'%';
+  document.getElementById('aim-start-btn').textContent = '▶ Ещё раз';
   aimOv.style.display = 'flex';
-  document.getElementById('aim-start-btn').addEventListener('click', function(e){ e.stopPropagation(); aimStart(); });
 }
 function aimUpdStats() {
   document.getElementById('a-hits').textContent = aimHits;
@@ -857,7 +868,7 @@ function move2048(dir) {
         infoObj.isMerged = true;
 
         if (row[i+1].info) {
-          deadTiles.push({ id: row[i+1].info.id, targetRow: row[i].r, targetCol: row[i].c });
+          deadTiles.push(row[i+1].info.id);
         }
 
         newRow.push({ value: mergedValue, info: infoObj });
@@ -889,14 +900,9 @@ function move2048(dir) {
   }
 
   if (moved) {
-    deadTiles.forEach(t => {
-      let el = document.getElementById(`t2048-${t.id}`);
-      if (el) {
-        el.dataset.row = t.targetRow;
-        el.dataset.col = t.targetCol;
-        el.classList.add('tile-dead');
-        el.remove();
-      }
+    deadTiles.forEach(id => {
+      let el = document.getElementById(`t2048-${id}`);
+      if (el) el.remove();
     });
 
     spawn2048();
@@ -956,9 +962,8 @@ function toggleTheme() {
   draw2048();
 }
 
-const savedTheme = localStorage.getItem('theme') || 'dark';
-document.documentElement.setAttribute('data-theme', savedTheme);
-document.querySelector('#theme-btn .material-icons').textContent = savedTheme === 'dark' ? 'dark_mode' : 'light_mode';
+document.querySelector('#theme-btn .material-icons').textContent =
+  document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark_mode' : 'light_mode';
 
 const footerVariants = [
   "d6xd.lol?",

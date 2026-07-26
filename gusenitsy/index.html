@@ -131,10 +131,14 @@ const title = document.getElementById("title");
 let spawnRate = 40;
 let apocalypse = false;
 
-btn.addEventListener("click", () => {
+btn.addEventListener("click", async () => {
   music.volume = 0.6;
-  music.play();
-  btn.style.display = "none";
+  try {
+    await music.play();
+    btn.style.display = "none";
+  } catch {
+    btn.textContent = "▶ НАЖМИ ЕЩЁ РАЗ";
+  }
 });
 
 function spawnGus(sizeBoost = 1) {
@@ -149,7 +153,10 @@ function spawnGus(sizeBoost = 1) {
   setTimeout(() => g.remove(), 15000);
 }
 
-setInterval(() => spawnGus(apocalypse ? 2.5 : 1), () => spawnRate);
+(function spawnLoop() {
+  spawnGus(apocalypse ? 2.5 : 1);
+  setTimeout(spawnLoop, spawnRate);
+})();
 
 /* ⏱️ ТАЙМЕР АПОКАЛИПСИСА — 5 МИНУТ */
 setTimeout(() => {

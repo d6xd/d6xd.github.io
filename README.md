@@ -18,3 +18,12 @@ card with my biography, and social links (it is not relevant at the moment)
 
 **[v0dol4z_shakal1zator](https://d6xd.github.io/v0dol4z_shakal1zator)**  
 degrades the quality of your photos, making them more meme-y. *yes.*
+
+**[minigames](https://d6xd.github.io/minigames)**  
+five small games in one page: guess the number, snake, aim trainer, cps test and 2048
+
+**[dvd-rat](https://d6xd.github.io/dvd-rat)**  
+a rat bouncing around like a dvd logo. three modes: dvd, a spinning 3d cube and bigrats with physics
+
+**[gusenitsy](https://d6xd.github.io/gusenitsy)**  
+caterpillars. music. an apocalypse after five minutes. that's it

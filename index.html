@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru" data-theme="dark">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
   <link rel="icon" type="image/png" href="ico.jpg">
   <title>d6xd</title>
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Mono:wght@400;500&display=swap" rel="stylesheet"/>
@@ -289,33 +290,33 @@
   </div>
 
   <div class="card">
-    <h1 class="headline">Hey! It looks like you've landed on the homepage d6xd.github.io.</h1>
+    <h1 class="headline">Hey! It looks like you've landed on the homepage of d6xd.github.io.</h1>
     <p class="subheadline">You can choose where to go next by clicking the buttons below.</p>
 
     <div class="divider"></div>
 
     <div class="btn-grid">
-      <a class="md-btn" href="https://d6xd.github.io/bio">
+      <a class="md-btn" href="bio/">
         <span class="material-icons" style="font-size:20px">person</span>
         <span id="btn-bio">Bio</span>
       </a>
 
-      <a class="md-btn" href="https://d6xd.github.io/minigames">
+      <a class="md-btn" href="minigames/">
         <span class="material-icons" style="font-size:20px">sports_esports</span>
         <span id="btn-minigames">Minigames</span>
       </a>
 
-      <a class="md-btn" href="https://d6xd.github.io/dvd-rat">
+      <a class="md-btn" href="dvd-rat/">
         <span class="material-icons" style="font-size:20px">pest_control_rodent</span>
         <span id="btn-dvd">DVD-Rat</span>
       </a>
 
-      <a class="md-btn" href="https://d6xd.github.io/gusenitsy">
+      <a class="md-btn" href="gusenitsy/">
         <span class="material-icons" style="font-size:20px">bug_report</span>
         <span id="btn-gusenitsy">GUSENITSY</span>
       </a>
 
-      <a class="md-btn" href="https://d6xd.github.io/v0dol4z_shakal1zator">
+      <a class="md-btn" href="v0dol4z_shakal1zator/">
         <span class="material-icons" style="font-size:20px">add_photo_alternate</span>
         <span id="btn-shakal">JPEG CORRUPT.</span>
       </a>
@@ -387,9 +388,8 @@
       localStorage.setItem('theme', newTheme);
     }
 
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    document.querySelector('#theme-btn .material-icons').textContent = savedTheme === 'dark' ? 'dark_mode' : 'light_mode';
+    document.querySelector('#theme-btn .material-icons').textContent =
+      document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark_mode' : 'light_mode';
 
     const translations = {
       en: {
@@ -399,7 +399,7 @@
         minigames: "Minigames",
         dvd: "DVD-Rat",
         gusenitsy: "GUSENITSY",
-        shakal: "shakal1zator"
+        shakal: "JPEG CORRUPT."
       },
       ru: {
         headline: "Эй! Кажется, вы попали на заглавную страницу d6xd.github.io.",
@@ -408,7 +408,7 @@
         minigames: "Мини-игры",
         dvd: "DVD-Крысюк",
         gusenitsy: "ГУСЕНИЦЫ",
-        shakal: "shakal1zator"
+        shakal: "JPEG CORRUPT."
       }
     };
 
@@ -416,6 +416,7 @@
 
     function toggleLang() {
       currentLang = currentLang === 'en' ? 'ru' : 'en';
+      document.documentElement.lang = currentLang;
       document.getElementById('lang-label').textContent = currentLang === 'en' ? 'EN' : 'RU';
       document.querySelector('.headline').textContent = translations[currentLang].headline;
       document.querySelector('.subheadline').textContent = translations[currentLang].subheadline;

@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
   <link rel="icon" type="image/png" href="icon.jpg">
   <title>nepetapip3 · bio</title>
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Mono:wght@400;500&display=swap" rel="stylesheet"/>
@@ -410,9 +411,8 @@
       localStorage.setItem('theme', newTheme);
     }
 
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    document.querySelector('#theme-btn .material-icons').textContent = savedTheme === 'dark' ? 'dark_mode' : 'light_mode';
+    document.querySelector('#theme-btn .material-icons').textContent =
+      document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark_mode' : 'light_mode';
 
     const translations = {
       ru: {
@@ -429,6 +429,7 @@
 
     function toggleLang() {
       currentLang = currentLang === 'ru' ? 'en' : 'ru';
+      document.documentElement.lang = currentLang;
       document.getElementById('lang-label').textContent = translations[currentLang].label;
       document.getElementById('bio-desc').textContent = translations[currentLang].desc;
     }

@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
   <link rel="icon" type="image/png" href="ico.jpg">
   <title>shakal1zator</title>
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Mono:wght@400;500&display=swap" rel="stylesheet"/>
@@ -577,10 +578,7 @@
       });
     });
 
-    shakalBtn.addEventListener('click', function(e) {
-      rippleEffect(this, e);
-      shakalize();
-    });
+    shakalBtn.addEventListener('click', shakalize);
 
     async function shakalize() {
       const { quality, scale, passes } = levelParams[selectedLevel];
@@ -590,63 +588,68 @@
       setProgress(0);
       resultWrap.style.display = 'none';
 
-      const bitmap = await createImageBitmap(imageFile);
-      const origW = bitmap.width;
-      const origH = bitmap.height;
+      try {
+        const bitmap = await createImageBitmap(imageFile);
+        const origW = bitmap.width;
+        const origH = bitmap.height;
 
-      const offscreen = new OffscreenCanvas(origW, origH);
-      const ctx = offscreen.getContext('2d');
-      ctx.drawImage(bitmap, 0, 0);
+        const offscreen = new OffscreenCanvas(origW, origH);
+        const ctx = offscreen.getContext('2d');
+        ctx.drawImage(bitmap, 0, 0);
 
-      let currentW = origW;
-      let currentH = origH;
+        let currentW = origW;
+        let currentH = origH;
 
-      for (let pass = 0; pass < passes; pass++) {
-        statusEl.textContent = `pls wait... ${pass + 1}/${passes}`;
+        for (let pass = 0; pass < passes; pass++) {
+          statusEl.textContent = `pls wait... ${pass + 1}/${passes}`;
 
-        const newW = Math.max(16, Math.round(origW * scale));
-        const newH = Math.max(16, Math.round(origH * scale));
+          const newW = Math.max(16, Math.round(origW * scale));
+          const newH = Math.max(16, Math.round(origH * scale));
 
-        const smallCanvas = new OffscreenCanvas(newW, newH);
-        const smallCtx = smallCanvas.getContext('2d');
-        smallCtx.drawImage(offscreen, 0, 0, currentW, currentH, 0, 0, newW, newH);
+          const smallCanvas = new OffscreenCanvas(newW, newH);
+          const smallCtx = smallCanvas.getContext('2d');
+          smallCtx.drawImage(offscreen, 0, 0, currentW, currentH, 0, 0, newW, newH);
 
-        const blob = await smallCanvas.convertToBlob({ type: 'image/jpeg', quality });
-        const newBitmap = await createImageBitmap(blob);
+          const blob = await smallCanvas.convertToBlob({ type: 'image/jpeg', quality });
+          const newBitmap = await createImageBitmap(blob);
 
-        if (pass < passes - 1) {
-          offscreen.width = origW;
-          offscreen.height = origH;
-          ctx.imageSmoothingEnabled = false;
-          ctx.drawImage(newBitmap, 0, 0, origW, origH);
-          currentW = origW;
-          currentH = origH;
-        } else {
-          offscreen.width = newW;
-          offscreen.height = newH;
-          const lastCtx = offscreen.getContext('2d');
-          lastCtx.drawImage(newBitmap, 0, 0);
-          currentW = newW;
-          currentH = newH;
+          if (pass < passes - 1) {
+            offscreen.width = origW;
+            offscreen.height = origH;
+            ctx.imageSmoothingEnabled = false;
+            ctx.drawImage(newBitmap, 0, 0, origW, origH);
+            currentW = origW;
+            currentH = origH;
+          } else {
+            offscreen.width = newW;
+            offscreen.height = newH;
+            const lastCtx = offscreen.getContext('2d');
+            lastCtx.drawImage(newBitmap, 0, 0);
+            currentW = newW;
+            currentH = newH;
+          }
+
+          setProgress(Math.round(((pass + 1) / passes) * 100));
+          await new Promise(r => setTimeout(r, 30));
         }
 
-        setProgress(Math.round(((pass + 1) / passes) * 100));
-        await new Promise(r => setTimeout(r, 30));
+        const finalBlob = await offscreen.convertToBlob({ type: 'image/jpeg', quality });
+        const finalUrl  = URL.createObjectURL(finalBlob);
+
+        resultImg.src = finalUrl;
+        downloadBtn.href = finalUrl;
+        downloadBtn.download = `shakal_level_${selectedLevel}.jpg`;
+        resultCaption.textContent = captions[selectedLevel];
+        resultWrap.style.display = 'block';
+
+        statusEl.textContent = 'done!';
+        resultWrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } catch (err) {
+        statusEl.textContent = 'не вышло: ' + (err?.message || 'файл не читается как картинка');
+      } finally {
+        progressWrap.style.display = 'none';
+        updateBtn();
       }
-
-      const finalBlob = await offscreen.convertToBlob({ type: 'image/jpeg', quality });
-      const finalUrl  = URL.createObjectURL(finalBlob);
-
-      resultImg.src = finalUrl;
-      downloadBtn.href = finalUrl;
-      downloadBtn.download = `shakal_level_${selectedLevel}.jpg`;
-      resultCaption.textContent = captions[selectedLevel];
-      resultWrap.style.display = 'block';
-
-      statusEl.textContent = 'done!';
-      shakalBtn.disabled = false;
-
-      resultWrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
     function rippleEffect(btn, e) {
@@ -710,9 +713,8 @@
       localStorage.setItem('theme', newTheme);
     }
 
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    document.querySelector('#theme-btn .material-icons').textContent = savedTheme === 'dark' ? 'dark_mode' : 'light_mode';
+    document.querySelector('#theme-btn .material-icons').textContent =
+      document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark_mode' : 'light_mode';
   </script>
 </body>
 </html>

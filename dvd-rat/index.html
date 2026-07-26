@@ -129,15 +129,19 @@
         if (grabbedRat !== this) {
           this.vy += 0.5; this.x += this.vx; this.y += this.vy;
           this.vx *= 0.98; // Трение по горизонтали
+          if (this.x <= 0) {
+            this.x = 0;
+            this.vx *= -0.5;
+          } else if (this.x + 150 >= window.innerWidth) {
+            this.x = window.innerWidth - 150;
+            this.vx *= -0.5;
+          }
           if (this.y + 120 >= window.innerHeight) {
             this.y = window.innerHeight - 120;
             this.vy *= -0.3; // Слабый отскок
             this.vx *= 0.5;   // Торможение об пол
             if (Math.abs(this.vy) < 2) this.vy = 0;
           }
-        } else {
-          this.x += this.vx;
-          this.y += this.vy;
         }
       }
       this.applyStyle();
@@ -208,7 +212,7 @@
     if (e.code === 'Space' && currentMode !== '3d') rats.push(new Ratsky());
   });
 
-  document.getElementById('mode-toggle').onclick = toggleMode;
+  document.getElementById('mode-toggle').onclick = function () { this.blur(); toggleMode(); };
 
   function loop() {
     if (currentMode === '3d') {
